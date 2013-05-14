@@ -47,7 +47,6 @@ public class mod_NetMod
         EntityRegistry.registerModEntity(EntityItemNet.class, "Net", 1, instance, 64, 10, true);        
         RenderingRegistry.registerEntityRenderingHandler(EntityItemNet.class, new RenderNet(0));
         GameRegistry.addRecipe(new ItemStack(this.itemNet, 4), new Object[] { "DdD", "ddd", "DdD", 'D', Block.cobblestone, 'd', Block.fenceIron});
-        GameRegistry.addRecipe(new ItemStack(Block.mobSpawner, 1), new Object[] { "DDD", "DdD", "DDD", 'D', this.itemNetChicken, 'd', Block.blockDiamond});
 	}
 
 	@PostInit
