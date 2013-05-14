@@ -33,6 +33,9 @@ public class mod_NetMod
 
 	public static Item itemNet;
 	public static Item itemNetChicken;
+	public static Item itemNetSheep;
+	public static Item itemNetPig;
+	public static Item itemNetCow;
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
@@ -42,8 +45,14 @@ public class mod_NetMod
 	public void init(FMLInitializationEvent event) {
     	itemNet = new ItemNet(4001).setItemName("itemnet");
     	itemNetChicken = new ItemNetChicken(4010).setItemName("itemnetchicken");
+    	itemNetSheep = new ItemNetSheep(4011).setItemName("itemnetsheep");
+    	itemNetPig = new ItemNetPig(4012).setItemName("itemnetpig");
+    	itemNetCow = new ItemNetCow(4013).setItemName("itemnetcow");
         LanguageRegistry.addName(itemNet, "Net");
         LanguageRegistry.addName(itemNetChicken, "Net");
+        LanguageRegistry.addName(itemNetSheep, "Net");
+        LanguageRegistry.addName(itemNetPig, "Net");
+        LanguageRegistry.addName(itemNetCow, "Net");
         EntityRegistry.registerModEntity(EntityItemNet.class, "Net", 1, instance, 64, 10, true);        
         RenderingRegistry.registerEntityRenderingHandler(EntityItemNet.class, new RenderNet(0));
         GameRegistry.addRecipe(new ItemStack(this.itemNet, 4), new Object[] { "DdD", "ddd", "DdD", 'D', Block.cobblestone, 'd', Block.fenceIron});

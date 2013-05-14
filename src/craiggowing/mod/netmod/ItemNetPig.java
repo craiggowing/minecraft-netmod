@@ -6,24 +6,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityPig;
 
-public class ItemNetChicken extends ItemNetFull
+public class ItemNetPig extends ItemNetFull
 {
-    public ItemNetChicken(int par1) {
+    public ItemNetPig(int par1) {
         super(par1);
         this.maxStackSize = 1;
-        this.setIconIndex(1);
+        this.setIconIndex(3);
     }
 	
     public String getItemNetName()
     {
-    	return "Chicken";
+    	return "Pig";
     }
 
     protected Entity getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
     {
-    	return new EntityChicken(par2World);
+    	return new EntityPig(par2World);
     }
     
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
