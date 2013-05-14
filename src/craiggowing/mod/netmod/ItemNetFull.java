@@ -4,12 +4,22 @@ import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Event;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraft.tileentity.TileEntityMobSpawner;
 
 public class ItemNetFull extends ItemNet
 {
@@ -21,12 +31,17 @@ public class ItemNetFull extends ItemNet
 	
     public String getItemNetName()
     {
-    	return "Full";
+    	return "Pig";
     }
 
-    private Entity getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    public String getMobName()
     {
-    	return new EntitySilverfish(par2World);
+    	return this.getItemNetName();
+    }
+    
+    protected Entity getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    {
+    	return new EntityPig(par2World);
     }
     
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
@@ -42,6 +57,39 @@ public class ItemNetFull extends ItemNet
             --par1ItemStack.stackSize;
         }
         
+        /* Are we clicking on a diamond block? */
+        float var4 = 1.0F;
+        double var5 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double)var4;
+        double var7 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double)var4 + 1.62D - (double)par3EntityPlayer.yOffset;
+        double var9 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double)var4;
+        MovingObjectPosition var12 = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
+
+        if (var12 != null && var12.typeOfHit == EnumMovingObjectType.TILE)
+        {
+            int var13 = var12.blockX;
+            int var14 = var12.blockY;
+            int var15 = var12.blockZ;
+
+            if (par2World.canMineBlock(par3EntityPlayer, var13, var14, var15) && par3EntityPlayer.canPlayerEdit(var13, var14, var15, var12.sideHit, par1ItemStack))
+            {
+                if (par2World.getBlockId(var13, var14, var15) == Block.blockDiamond.blockID)
+                {
+                    if (!par2World.isRemote)
+                    {
+	                	par2World.setBlockAndMetadataWithNotify(var13, var14, var15, Block.mobSpawner.blockID, 1);
+	                	TileEntity te = par2World.getBlockTileEntity(var13, var14, var15);
+	                	if (te != null && te instanceof TileEntityMobSpawner)
+	                	{
+	                		TileEntityMobSpawner tems = (TileEntityMobSpawner)te; 
+	                		tems.setMobID(this.getMobName());
+	                	}
+                    }
+                    return par1ItemStack;
+                }
+            }
+        }
+        
+        /* Throw creature if not */
         par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         
         if (!par2World.isRemote)
