@@ -4,11 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.nbt.NBTTagCompound;
@@ -66,6 +70,27 @@ public class EntityItemNet extends EntityThrowable
 	        		par1MovingObjectPosition.entityHit.writeToNBT(nbt);
 	        		dropped.getEntityItem().setTagCompound(nbt);
 	        		par1MovingObjectPosition.entityHit.setDead();
+	        	}
+	        	else if (par1MovingObjectPosition.entityHit instanceof EntityLiving)
+	        	{
+	        		EntityLiving eh = (EntityLiving)par1MovingObjectPosition.entityHit;
+
+	        		int var13 = MathHelper.floor_double((eh.posX * 2.0 + this.posX) / 3.0);
+                    int var14 = MathHelper.floor_double((eh.posY + (eh.height / 2.0) + this.posY * 2.0) / 3.0);
+                    int var15 = MathHelper.floor_double((eh.posZ * 2.0 + this.posZ) / 3.0);
+                    
+                    if (this.worldObj.getBlockId(var13, var14, var15) == 0) // air
+                    {
+                        if (!this.worldObj.isRemote && this.getThrower() instanceof EntityPlayer)
+                        {
+                        	EntityPlayer ep = (EntityPlayer)this.getThrower();
+                        	if (ep.canPlayerEdit(var13, var14, var15, 0, null))
+                        	{
+	                        	this.worldObj.setBlockAndMetadataWithNotify(var13, var14, var15, mod_NetMod.blockNet.blockID, 1);
+	                        	capturedAnimal = true;
+                        	}
+                        }
+                    }
 	        	}
 	        }
 	        

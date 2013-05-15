@@ -75,12 +75,7 @@ public class ItemNetFull extends ItemNet
         }
         
         /* Are we clicking on a diamond block? */
-        float var4 = 1.0F;
-        double var5 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double)var4;
-        double var7 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double)var4 + 1.62D - (double)par3EntityPlayer.yOffset;
-        double var9 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double)var4;
         MovingObjectPosition var12 = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
-
         if (var12 != null && var12.typeOfHit == EnumMovingObjectType.TILE)
         {
             int var13 = var12.blockX;

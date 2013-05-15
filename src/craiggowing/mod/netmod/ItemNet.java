@@ -11,7 +11,7 @@ public class ItemNet extends Item
     public ItemNet(int par1) {
         super(par1);
         this.maxStackSize = 64;
-        this.setCreativeTab(CreativeTabs.tabMaterials);
+        this.setCreativeTab(CreativeTabs.tabCombat);
         this.setIconIndex(0);
     }
     
@@ -32,7 +32,7 @@ public class ItemNet extends Item
         return par1ItemStack;
     }
     
-    public String getTextureFile ()
+    public String getTextureFile()
     {
         return CommonProxy.ITEMS_PNG;
     }
