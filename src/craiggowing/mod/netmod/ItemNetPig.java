@@ -3,9 +3,10 @@ package craiggowing.mod.netmod;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntityPig;
 
 public class ItemNetPig extends ItemNetFull
@@ -21,7 +22,7 @@ public class ItemNetPig extends ItemNetFull
     	return "Pig";
     }
 
-    protected Entity getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
     {
     	return new EntityPig(par2World);
     }
@@ -29,7 +30,14 @@ public class ItemNetPig extends ItemNetFull
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-        //par3List.add(this.getItemNetName()); // TODO: Add attrs like age etc.
+        NBTTagCompound tag = par1ItemStack.getTagCompound();
+        if (tag != null)
+        {
+	        if (tag.hasKey("Saddle"))
+	        {
+	        	par3List.add("Has Saddle: " + (tag.getBoolean("Saddle") ? "Yes" : "No"));
+	        }
+        }
     }
    
 }

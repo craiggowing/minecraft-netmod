@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,8 +15,8 @@ import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -39,7 +40,7 @@ public class ItemNetFull extends ItemNet
     	return this.getItemNetName();
     }
     
-    protected Entity getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
     {
     	return new EntityPig(par2World);
     }
@@ -48,6 +49,22 @@ public class ItemNetFull extends ItemNet
     {
         super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
         par3List.add(this.getItemNetName());
+        NBTTagCompound tag = par1ItemStack.getTagCompound();
+        if (tag != null)
+        {
+	        if (tag.hasKey("Health"))
+	        {
+	        	par3List.add("Health: " + tag.getShort("Health"));
+	        }
+	        if (tag.hasKey("Age"))
+	        {
+	        	par3List.add("Age: " + tag.getInteger("Age"));
+	        }
+	        if (tag.hasKey("InLove"))
+	        {
+	        	par3List.add("Love Meter: " + tag.getInteger("InLove"));
+	        }
+        }
     }
     
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -94,15 +111,15 @@ public class ItemNetFull extends ItemNet
         
         if (!par2World.isRemote)
         {
-        	Entity spawnEntity = this.getEntityToSpawn(par2World, par3EntityPlayer);
-			this.setEntityAttributes(spawnEntity, par2World, par3EntityPlayer);
+        	EntityLiving spawnEntity = this.getEntityToSpawn(par2World, par3EntityPlayer);
+			this.setEntityAttributes(par1ItemStack, spawnEntity, par2World, par3EntityPlayer);
         	par2World.spawnEntityInWorld(spawnEntity);
         }
         
         return par1ItemStack;
     }
     
-    private void setEntityAttributes(Entity spawnEntity, World par2World, EntityPlayer par3EntityPlayer)
+    private void setEntityAttributes(ItemStack par1ItemStack, EntityLiving spawnEntity, World par2World, EntityPlayer par3EntityPlayer)
     {
     	spawnEntity.setLocationAndAngles(par3EntityPlayer.posX, par3EntityPlayer.posY + (double)par3EntityPlayer.getEyeHeight(), par3EntityPlayer.posZ, par3EntityPlayer.rotationYaw, par3EntityPlayer.rotationPitch);
     	spawnEntity.posX -= (double)(MathHelper.cos(spawnEntity.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
@@ -114,6 +131,10 @@ public class ItemNetFull extends ItemNet
         spawnEntity.motionX = (double)(-MathHelper.sin(spawnEntity.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(spawnEntity.rotationPitch / 180.0F * (float)Math.PI) * var3) * 2.0;
         spawnEntity.motionZ = (double)(MathHelper.cos(spawnEntity.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(spawnEntity.rotationPitch / 180.0F * (float)Math.PI) * var3) * 2.0;
         spawnEntity.motionY = (double)(-MathHelper.sin((spawnEntity.rotationPitch) / 180.0F * (float)Math.PI) * var3) * 2.0;
+        if (par1ItemStack.getTagCompound() != null)
+        {
+        	spawnEntity.readEntityFromNBT(par1ItemStack.getTagCompound());
+        }
     }
    
 }

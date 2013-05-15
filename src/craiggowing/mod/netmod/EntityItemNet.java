@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityPig;
@@ -38,28 +39,32 @@ public class EntityItemNet extends EntityThrowable
     	{
 	        if (par1MovingObjectPosition.entityHit != null)
 	        {
+	        	EntityItem dropped = null;
 	        	if (par1MovingObjectPosition.entityHit instanceof EntityChicken)
 	        	{
 	        		capturedAnimal = true;
-	        		this.dropItem(mod_NetMod.itemNetChicken.itemID, 1);
+	        		dropped = this.dropItem(mod_NetMod.itemNetChicken.itemID, 1);
 	        	}
 	        	else if (par1MovingObjectPosition.entityHit instanceof EntitySheep)
 	        	{
 	        		capturedAnimal = true;
-	        		this.dropItem(mod_NetMod.itemNetSheep.itemID, 1);
+	        		dropped = this.dropItem(mod_NetMod.itemNetSheep.itemID, 1);
 	        	}
 	        	else if (par1MovingObjectPosition.entityHit instanceof EntityPig)
 	        	{
 	        		capturedAnimal = true;
-	        		this.dropItem(mod_NetMod.itemNetPig.itemID, 1);
+	        		dropped = this.dropItem(mod_NetMod.itemNetPig.itemID, 1);
 	        	}
 	        	else if (par1MovingObjectPosition.entityHit instanceof EntityCow)
 	        	{
 	        		capturedAnimal = true;
-	        		this.dropItem(mod_NetMod.itemNetCow.itemID, 1);
+	        		dropped = this.dropItem(mod_NetMod.itemNetCow.itemID, 1);
 	        	}
-	        	if (capturedAnimal == true)
+	        	if (capturedAnimal == true && dropped != null)
 	        	{
+	        		NBTTagCompound nbt = new NBTTagCompound();
+	        		par1MovingObjectPosition.entityHit.writeToNBT(nbt);
+	        		dropped.getEntityItem().setTagCompound(nbt);
 	        		par1MovingObjectPosition.entityHit.setDead();
 	        	}
 	        }
