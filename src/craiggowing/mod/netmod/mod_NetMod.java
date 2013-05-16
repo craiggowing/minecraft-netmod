@@ -22,10 +22,9 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.src.ModLoader;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.*;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.boss.*;
 
 @Mod(modid = "NetMod", name = "Net Mod", version = "1.0.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
@@ -42,10 +41,97 @@ public class mod_NetMod
 	public static Item itemNetFull;
 	public static Block blockNet;
 
-	public static int mobTotal = 4;
-	public static Class[] itemClasses = new Class[] {EntityChicken.class, EntitySheep.class, EntityPig.class, EntityCow.class};
-	public static String[] itemNames = new String[] {"Chicken", "Sheep", "Pig", "Cow"};
-	public static String[] mobNames = new String[] {"Chicken", "Sheep", "Pig", "Cow"};
+	public static int mobTotal = 28;
+	public static Class[] itemClasses = new Class[] {
+			EntityChicken.class,
+			EntitySheep.class,
+			EntityPig.class,
+			EntityCow.class,
+			EntityBat.class,
+			EntityMooshroom.class,
+			EntityOcelot.class,
+			EntitySquid.class,
+			EntityVillager.class,
+			EntityWolf.class,
+			EntityBlaze.class,
+			EntityCaveSpider.class,
+			EntityCreeper.class,
+			EntityEnderman.class,
+			EntityGhast.class,
+			EntityGiantZombie.class,
+			EntityIronGolem.class,
+			EntityMagmaCube.class,
+			EntityPigZombie.class,
+			EntitySilverfish.class,
+			EntitySkeleton.class,
+			EntitySlime.class,
+			EntitySnowman.class,
+			EntitySpider.class,
+			EntityWitch.class,
+			EntityZombie.class,
+			EntityDragon.class,
+			EntityWither.class			
+		};
+	public static String[] itemNames = new String[] {
+			"Chicken",
+			"Sheep",
+			"Pig",
+			"Cow",
+			"Bat",
+			"Mushroom Cow",
+			"Ocelot",
+			"Squid",
+			"Villager",
+			"Wolf",
+			"Blaze",
+			"Cave Spider",
+			"Creeper",
+			"Enderman",
+			"Ghast",
+			"Giant",
+			"Iron Golem",
+			"Magma Cube",
+			"Zombie Pigman",
+			"Silverfish",
+			"Skeleton",
+			"Slime",
+			"Snowman",
+			"Spider",
+			"Witch",
+			"Zombie",
+			"Ender Dragon",
+			"Wither"
+		};
+	public static String[] mobNames = new String[] {
+			"Chicken",
+			"Sheep",
+			"Pig",
+			"Cow",
+			"Bat",
+			"MushroomCow",
+			"Ozelot",
+			"Squid",
+			"Villager",
+			"Wolf",
+			"Blaze",
+			"CaveSpider",
+			"Creeper",
+			"Enderman",
+			"Ghast",
+			"Giant",
+			"VillagerGolem",
+			"LavaSlime",
+			"PigZombie",
+			"Silverfish",
+			"Skeleton",
+			"Slime",
+			"SnowMan",
+			"Spider",
+			"Witch",
+			"Zombie",
+			"Pig", // Ender Dragon does not work well with Spawn Blocks
+			"Pig" // Wither does not work well with Spawn Blocks
+		};
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
@@ -53,7 +139,7 @@ public class mod_NetMod
 	
 	@Init
 	public void init(FMLInitializationEvent event) {
-		blockNet = (new BlockNet(1000, 16)).setLightOpacity(1).setHardness(4.0F).setBlockName("blocknet");
+		blockNet = (new BlockNet(1000, 1)).setLightOpacity(1).setHardness(4.0F).setBlockName("blocknet");
     	itemNet = new ItemNet(4001).setItemName("itemnet");
     	itemNetFull = new ItemNetFull(4002).setItemName("itemnetfull");
 		ModLoader.registerBlock(blockNet);

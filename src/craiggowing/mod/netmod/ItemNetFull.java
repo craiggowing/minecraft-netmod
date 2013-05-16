@@ -34,7 +34,7 @@ public class ItemNetFull extends ItemNet
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.maxStackSize = 1;
-        this.setIconIndex(1);
+        this.setIconIndex(16);
     }
 	
     @SideOnly(Side.CLIENT)
@@ -61,7 +61,7 @@ public class ItemNetFull extends ItemNet
         int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
         try
         {
-        	return (EntityLiving)mod_NetMod.itemClasses[var2].getConstructor(World.class).newInstance(par2World);
+        	return (EntityLiving)mod_NetMod.itemClasses[var2].getConstructor(new Class[] {World.class}).newInstance(new Object[] {par2World});
         }
         catch (Exception e)
         {

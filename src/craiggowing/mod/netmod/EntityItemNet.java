@@ -16,10 +16,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntityCow;
 
 public class EntityItemNet extends EntityThrowable
 {
