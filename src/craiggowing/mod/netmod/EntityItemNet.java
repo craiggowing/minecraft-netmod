@@ -45,33 +45,27 @@ public class EntityItemNet extends EntityThrowable
      */
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
     {
-    	boolean capturedAnimal = false;
+    	int capturedAnimal = -1;
     	if (!this.worldObj.isRemote)
     	{
 	        if (par1MovingObjectPosition.entityHit != null)
 	        {
 	        	EntityItem dropped = null;
-	        	if (par1MovingObjectPosition.entityHit instanceof EntityChicken)
+	        	
+	        	for (int x = 0; x < mod_NetMod.mobTotal; ++x)
 	        	{
-	        		capturedAnimal = true;
-	        		dropped = this.dropItem(mod_NetMod.itemNetChicken.itemID, 1);
+	        		if (par1MovingObjectPosition.entityHit.getClass() == mod_NetMod.itemClasses[x])
+	        		{
+	        			capturedAnimal = x;
+	        			break;
+	        		}
 	        	}
-	        	else if (par1MovingObjectPosition.entityHit instanceof EntitySheep)
+	        	if (capturedAnimal > -1)
 	        	{
-	        		capturedAnimal = true;
-	        		dropped = this.dropItem(mod_NetMod.itemNetSheep.itemID, 1);
+	        		dropped = this.entityDropItem(new ItemStack(mod_NetMod.itemNetFull.itemID, 1, capturedAnimal), 0.0F);
 	        	}
-	        	else if (par1MovingObjectPosition.entityHit instanceof EntityPig)
-	        	{
-	        		capturedAnimal = true;
-	        		dropped = this.dropItem(mod_NetMod.itemNetPig.itemID, 1);
-	        	}
-	        	else if (par1MovingObjectPosition.entityHit instanceof EntityCow)
-	        	{
-	        		capturedAnimal = true;
-	        		dropped = this.dropItem(mod_NetMod.itemNetCow.itemID, 1);
-	        	}
-	        	if (capturedAnimal == true && dropped != null)
+	        	
+	        	if (capturedAnimal > -1 && dropped != null)
 	        	{
 	        		NBTTagCompound nbt = new NBTTagCompound();
 	        		par1MovingObjectPosition.entityHit.writeToNBT(nbt);
@@ -94,14 +88,14 @@ public class EntityItemNet extends EntityThrowable
                         	if (ep.canPlayerEdit(var13, var14, var15, 0, null))
                         	{
 	                        	this.worldObj.setBlockAndMetadataWithNotify(var13, var14, var15, mod_NetMod.blockNet.blockID, 1);
-	                        	capturedAnimal = true;
+	                        	capturedAnimal = 0;
                         	}
                         }
                     }
 	        	}
 	        }
 	        
-	        if (!capturedAnimal)
+	        if (capturedAnimal == -1)
 	        {
 	        	this.dropItem(mod_NetMod.itemNet.itemID, 1);
 	        }

@@ -2,11 +2,16 @@ package craiggowing.mod.netmod;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
@@ -26,29 +31,48 @@ public class ItemNetFull extends ItemNet
 {
     public ItemNetFull(int par1) {
         super(par1);
+        this.setHasSubtypes(true);
+        this.setMaxDamage(0);
         this.maxStackSize = 1;
-        this.setIconIndex(0);
+        this.setIconIndex(1);
     }
 	
-    public String getItemNetName()
+    @SideOnly(Side.CLIENT)
+    public int getIconFromDamage(int par1)
     {
-    	return "Pig";
-    }
-
-    public String getMobName()
-    {
-    	return this.getItemNetName();
+    	int var2 = MathHelper.clamp_int(par1, 0, mod_NetMod.mobTotal-1);
+        return this.iconIndex + var2;
     }
     
-    protected EntityLiving getEntityToSpawn(World par2World)
+    public String getItemNetName(ItemStack par1ItemStack)
     {
-    	return new EntityPig(par2World);
+        int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
+        return mod_NetMod.itemNames[var2];
+    }
+
+    public String getMobName(ItemStack par1ItemStack)
+    {
+        int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
+        return mod_NetMod.mobNames[var2];
+    }
+    
+    protected EntityLiving getEntityToSpawn(ItemStack par1ItemStack, World par2World)
+    {
+        int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
+        try
+        {
+        	return (EntityLiving)mod_NetMod.itemClasses[var2].getConstructor(World.class).newInstance(par2World);
+        }
+        catch (Exception e)
+        {
+        	return new EntityPig(par2World);
+		}
     }
     
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-        par3List.add(this.getItemNetName());
+        par3List.add(this.getItemNetName(par1ItemStack));
         NBTTagCompound tag = par1ItemStack.getTagCompound();
         if (tag != null)
         {
@@ -63,6 +87,18 @@ public class ItemNetFull extends ItemNet
 	        if (tag.hasKey("InLove"))
 	        {
 	        	par3List.add("Love Meter: " + tag.getInteger("InLove"));
+	        }
+	        if (tag.hasKey("Saddle"))
+	        {
+	        	par3List.add("Has Saddle: " + (tag.getBoolean("Saddle") ? "Yes" : "No"));
+	        }
+	        if (tag.hasKey("Sheared"))
+	        {
+	        	par3List.add("Sheared: " + (tag.getBoolean("Sheared") ? "Yes" : "No"));
+	        }
+	        if (tag.hasKey("Color"))
+	        {
+	        	par3List.add("Fleece: " + ItemDye.dyeColorNames[tag.getByte("Color")]); // Avoiding the argument of Colour vs Color... Colour is correct :P
 	        }
         }
     }
@@ -93,7 +129,7 @@ public class ItemNetFull extends ItemNet
 	                	if (te != null && te instanceof TileEntityMobSpawner)
 	                	{
 	                		TileEntityMobSpawner tems = (TileEntityMobSpawner)te; 
-	                		tems.setMobID(this.getMobName());
+	                		tems.setMobID(this.getMobName(par1ItemStack));
 	                	}
                     }
                     return par1ItemStack;
@@ -106,7 +142,7 @@ public class ItemNetFull extends ItemNet
         
         if (!par2World.isRemote)
         {
-        	EntityLiving spawnEntity = this.getEntityToSpawn(par2World);
+        	EntityLiving spawnEntity = this.getEntityToSpawn(par1ItemStack, par2World);
 			this.setEntityAttributes(par1ItemStack, spawnEntity, par2World, par3EntityPlayer);
         	par2World.spawnEntityInWorld(spawnEntity);
         }
@@ -129,6 +165,15 @@ public class ItemNetFull extends ItemNet
         if (par1ItemStack.getTagCompound() != null)
         {
         	spawnEntity.readEntityFromNBT(par1ItemStack.getTagCompound());
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    {
+        for (int var4 = 0; var4 < mod_NetMod.mobTotal; ++var4)
+        {
+            par3List.add(new ItemStack(par1, 1, var4));
         }
     }
    

@@ -30,7 +30,7 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
         double var6 = (double)((float)par1IBlockSource.getYInt() + 0.2F);
         double var8 = par1IBlockSource.getZ() + (double)var3.getFrontOffsetZ();
         ItemNetFull inf = (ItemNetFull)par2ItemStack.getItem();
-        EntityLiving spawnEntity = inf.getEntityToSpawn(par1IBlockSource.getWorld());
+        EntityLiving spawnEntity = inf.getEntityToSpawn(par2ItemStack, par1IBlockSource.getWorld());
         float yaw = 0.0f;
         if (var3.getFrontOffsetX() > 0)
         {
