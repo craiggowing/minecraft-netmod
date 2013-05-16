@@ -24,7 +24,7 @@ public class ItemNetSheep extends ItemNetFull
     	return "Sheep";
     }
 
-    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World)
     {
     	return new EntitySheep(par2World);
     }

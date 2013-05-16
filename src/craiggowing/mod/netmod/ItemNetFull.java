@@ -40,7 +40,7 @@ public class ItemNetFull extends ItemNet
     	return this.getItemNetName();
     }
     
-    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World)
     {
     	return new EntityPig(par2World);
     }
@@ -106,7 +106,7 @@ public class ItemNetFull extends ItemNet
         
         if (!par2World.isRemote)
         {
-        	EntityLiving spawnEntity = this.getEntityToSpawn(par2World, par3EntityPlayer);
+        	EntityLiving spawnEntity = this.getEntityToSpawn(par2World);
 			this.setEntityAttributes(par1ItemStack, spawnEntity, par2World, par3EntityPlayer);
         	par2World.spawnEntityInWorld(spawnEntity);
         }

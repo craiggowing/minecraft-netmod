@@ -33,6 +33,13 @@ public class EntityItemNet extends EntityThrowable
         super(par1World, par2EntityLiving);
     }
 
+    public EntityItemNet(World par1World, double par2, double par4, double par6)
+    {
+        super(par1World);
+        this.setPosition(par2, par4, par6);
+        this.yOffset = 0.0F;
+    }
+    
     /**
      * Called when this EntityThrowable hits a block or entity.
      */

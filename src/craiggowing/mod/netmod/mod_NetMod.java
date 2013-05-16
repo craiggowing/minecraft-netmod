@@ -3,6 +3,7 @@ package craiggowing.mod.netmod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockWeb;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
@@ -64,6 +65,11 @@ public class mod_NetMod
         ModLoader.addShapelessRecipe(new ItemStack(this.itemNet, 1), new Object[] {this.blockNet});
         EntityRegistry.registerModEntity(EntityItemNet.class, "Net", 1, instance, 64, 10, true);        
         RenderingRegistry.registerEntityRenderingHandler(EntityItemNet.class, new RenderNet(0));
+        BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNet, new BehaviorNetDispense(ModLoader.getMinecraftServerInstance()));
+        BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNetChicken, new BehaviorNetFullDispense(ModLoader.getMinecraftServerInstance()));
+        BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNetSheep, new BehaviorNetFullDispense(ModLoader.getMinecraftServerInstance()));
+        BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNetPig, new BehaviorNetFullDispense(ModLoader.getMinecraftServerInstance()));
+        BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNetCow, new BehaviorNetFullDispense(ModLoader.getMinecraftServerInstance()));
 	}
 
 	@PostInit

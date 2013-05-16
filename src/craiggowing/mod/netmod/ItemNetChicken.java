@@ -21,7 +21,7 @@ public class ItemNetChicken extends ItemNetFull
     	return "Chicken";
     }
 
-    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World)
     {
     	return new EntityChicken(par2World);
     }

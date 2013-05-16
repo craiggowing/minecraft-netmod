@@ -22,7 +22,7 @@ public class ItemNetPig extends ItemNetFull
     	return "Pig";
     }
 
-    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World)
     {
     	return new EntityPig(par2World);
     }

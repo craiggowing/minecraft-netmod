@@ -21,7 +21,7 @@ public class ItemNetCow extends ItemNetFull
     	return "Cow";
     }
 
-    protected EntityLiving getEntityToSpawn(World par2World, EntityPlayer par3EntityPlayer)
+    protected EntityLiving getEntityToSpawn(World par2World)
     {
     	return new EntityCow(par2World);
     }
