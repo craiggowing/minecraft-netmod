@@ -4,6 +4,8 @@ import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
@@ -55,7 +57,8 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
         spawnEntity.motionY = (double)(-MathHelper.sin((0.0f) / 180.0F * (float)Math.PI) * var10) * 2.0;
         if (par2ItemStack.getTagCompound() != null)
         {
-            spawnEntity.readEntityFromNBT(par2ItemStack.getTagCompound());
+            NBTTagList tl = par2ItemStack.getTagCompound().getTagList("Creature");
+            spawnEntity.readEntityFromNBT((NBTTagCompound)tl.tagAt(0));
         }
         else
         {

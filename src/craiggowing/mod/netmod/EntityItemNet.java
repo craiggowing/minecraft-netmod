@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -58,9 +59,21 @@ public class EntityItemNet extends EntityThrowable
 
                 if (capturedAnimal > -1 && dropped != null)
                 {
-                    NBTTagCompound nbt = new NBTTagCompound();
-                    par1MovingObjectPosition.entityHit.writeToNBT(nbt);
-                    dropped.getEntityItem().setTagCompound(nbt);
+                    NBTTagList tl = new NBTTagList();
+                    NBTTagCompound nbt_el = new NBTTagCompound();
+                    NBTTagCompound nbt_is;
+                    if (dropped.getEntityItem().getTagCompound() != null)
+                    {
+                        nbt_is = (NBTTagCompound)dropped.getEntityItem().getTagCompound().copy();
+                    }
+                    else
+                    {
+                        nbt_is = new NBTTagCompound();
+                    }
+                    par1MovingObjectPosition.entityHit.writeToNBT(nbt_el);
+                    tl.appendTag(nbt_el);
+                    nbt_is.setTag("Creature", tl);
+                    dropped.getEntityItem().setTagCompound(nbt_is);
                     par1MovingObjectPosition.entityHit.setDead();
                 }
                 else if (capturedAnimal == -1 && par1MovingObjectPosition.entityHit instanceof EntityLiving)

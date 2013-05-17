@@ -1,5 +1,6 @@
 package craiggowing.mod.netmod;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
@@ -9,9 +10,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumMovingObjectType;
@@ -66,7 +69,12 @@ public class ItemNetFull extends ItemNet
     {
         super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
         par3List.add(this.getItemNetName(par1ItemStack));
-        NBTTagCompound tag = par1ItemStack.getTagCompound();
+        NBTTagCompound tag = null;
+        if (par1ItemStack.getTagCompound() != null && par1ItemStack.getTagCompound().hasKey("Creature"))
+        {
+            NBTTagList tl = par1ItemStack.getTagCompound().getTagList("Creature");
+            tag = (NBTTagCompound)tl.tagAt(0);
+        }
         if (tag != null)
         {
             if (tag.hasKey("Health"))
@@ -92,6 +100,37 @@ public class ItemNetFull extends ItemNet
             if (tag.hasKey("Color"))
             {
                 par3List.add("Fleece: " + ItemDye.dyeColorNames[tag.getByte("Color")]); // Avoiding the argument of Colour vs Color... Colour is correct :P
+            }
+            if (tag.hasKey("Equipment"))
+            {
+                NBTTagList eqtl = tag.getTagList("Equipment");
+                if (eqtl.tagCount() > 0)
+                {
+                    NBTTagCompound itemNBT = null;
+                    Item item = null;
+                    byte stackSize = 0;
+                    short itemDamage = 0;
+                    ArrayList Entries = new ArrayList();
+                    for (int var3 = 0; var3 < eqtl.tagCount(); ++var3)
+                    {
+                        itemNBT = (NBTTagCompound)eqtl.tagAt(var3);
+                        item = Item.itemsList[itemNBT.getShort("id")];
+                        if (item != null)
+                        {
+                            stackSize = itemNBT.getByte("Count");
+                            itemDamage = itemNBT.getShort("Damage");
+                            Entries.add("* " + item.getItemName() + " (" + stackSize + "," + itemDamage + ")");
+                        }
+                    }
+                    if (!Entries.isEmpty())
+                    {
+                        par3List.add("Equipment: " + Entries.size());
+                        for (int var3 = 0; var3 < Entries.size(); ++var3)
+                        {
+                            par3List.add(Entries.get(var3));
+                        }
+                    }
+                }
             }
         }
     }
@@ -166,9 +205,10 @@ public class ItemNetFull extends ItemNet
         spawnEntity.motionX = (double)(-MathHelper.sin(spawnEntity.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(spawnEntity.rotationPitch / 180.0F * (float)Math.PI) * var3) * 2.0;
         spawnEntity.motionZ = (double)(MathHelper.cos(spawnEntity.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(spawnEntity.rotationPitch / 180.0F * (float)Math.PI) * var3) * 2.0;
         spawnEntity.motionY = (double)(-MathHelper.sin((spawnEntity.rotationPitch) / 180.0F * (float)Math.PI) * var3) * 2.0;
-        if (par1ItemStack.getTagCompound() != null)
+        if (par1ItemStack.getTagCompound() != null && par1ItemStack.getTagCompound().hasKey("Creature"))
         {
-            spawnEntity.readEntityFromNBT(par1ItemStack.getTagCompound());
+            NBTTagList tl = par1ItemStack.getTagCompound().getTagList("Creature");
+            spawnEntity.readEntityFromNBT((NBTTagCompound)tl.tagAt(0));
         }
         else
         {
