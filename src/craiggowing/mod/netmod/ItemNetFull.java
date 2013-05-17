@@ -1,6 +1,7 @@
 package craiggowing.mod.netmod;
 
 import java.util.List;
+import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -47,13 +48,13 @@ public class ItemNetFull extends ItemNet
     public String getItemNetName(ItemStack par1ItemStack)
     {
         int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
-        return mod_NetMod.itemNames[var2];
+        return mod_NetMod.itemNames[var2][0];
     }
 
     public String getMobName(ItemStack par1ItemStack)
     {
         int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
-        return mod_NetMod.mobNames[var2];
+        return mod_NetMod.itemNames[var2][1];
     }
     
     protected EntityLiving getEntityToSpawn(ItemStack par1ItemStack, World par2World)
@@ -105,6 +106,9 @@ public class ItemNetFull extends ItemNet
     
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+    	Random random = new Random();
+    	int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
+    	
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
             --par1ItemStack.stackSize;
@@ -132,6 +136,10 @@ public class ItemNetFull extends ItemNet
 	                		tems.setMobID(this.getMobName(par1ItemStack));
 	                	}
                     }
+            		if (random.nextFloat() >= mod_NetMod.itemProbs[var2][1])
+            		{
+            			par3EntityPlayer.dropItem(mod_NetMod.itemNet.itemID, 1);
+            		}                    
                     return par1ItemStack;
                 }
             }
@@ -145,6 +153,10 @@ public class ItemNetFull extends ItemNet
         	EntityLiving spawnEntity = this.getEntityToSpawn(par1ItemStack, par2World);
 			this.setEntityAttributes(par1ItemStack, spawnEntity, par2World, par3EntityPlayer);
         	par2World.spawnEntityInWorld(spawnEntity);
+    		if (random.nextFloat() >= mod_NetMod.itemProbs[var2][1])
+    		{
+    			par3EntityPlayer.dropItem(mod_NetMod.itemNet.itemID, 1);
+    		}                    
         }
         
         return par1ItemStack;

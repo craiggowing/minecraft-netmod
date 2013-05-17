@@ -1,5 +1,7 @@
 package craiggowing.mod.netmod;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -42,12 +44,13 @@ public class EntityItemNet extends EntityThrowable
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
     {
     	int capturedAnimal = -1;
+    	EntityItem dropped = null;
+    	Random random = new Random();
+    	
     	if (!this.worldObj.isRemote)
     	{
 	        if (par1MovingObjectPosition.entityHit != null)
 	        {
-	        	EntityItem dropped = null;
-	        	
 	        	for (int x = 0; x < mod_NetMod.mobTotal; ++x)
 	        	{
 	        		if (par1MovingObjectPosition.entityHit.getClass() == mod_NetMod.itemClasses[x])
@@ -58,7 +61,10 @@ public class EntityItemNet extends EntityThrowable
 	        	}
 	        	if (capturedAnimal > -1)
 	        	{
-	        		dropped = this.entityDropItem(new ItemStack(mod_NetMod.itemNetFull.itemID, 1, capturedAnimal), 0.0F);
+	        		if (random.nextFloat() <= mod_NetMod.itemProbs[capturedAnimal][0])
+	        		{
+	        			dropped = this.entityDropItem(new ItemStack(mod_NetMod.itemNetFull.itemID, 1, capturedAnimal), 0.0F);
+	        		}
 	        	}
 	        	
 	        	if (capturedAnimal > -1 && dropped != null)
@@ -68,7 +74,7 @@ public class EntityItemNet extends EntityThrowable
 	        		dropped.getEntityItem().setTagCompound(nbt);
 	        		par1MovingObjectPosition.entityHit.setDead();
 	        	}
-	        	else if (par1MovingObjectPosition.entityHit instanceof EntityLiving)
+	        	else if (capturedAnimal == -1 && par1MovingObjectPosition.entityHit instanceof EntityLiving)
 	        	{
 	        		EntityLiving eh = (EntityLiving)par1MovingObjectPosition.entityHit;
 
@@ -94,6 +100,18 @@ public class EntityItemNet extends EntityThrowable
 	        if (capturedAnimal == -1)
 	        {
 	        	this.dropItem(mod_NetMod.itemNet.itemID, 1);
+	        }
+	        else if (capturedAnimal > -1 && dropped == null)
+	        {
+        		if (random.nextFloat() >= mod_NetMod.itemProbs[capturedAnimal][1])
+        		{
+        			this.dropItem(mod_NetMod.itemNet.itemID, 1);
+        		}
+        		else
+        		{
+        			System.out.print("Got animal "+capturedAnimal+", not captured, broken\n");
+        			// Break noise, broken item?
+        		}
 	        }
     	}
 

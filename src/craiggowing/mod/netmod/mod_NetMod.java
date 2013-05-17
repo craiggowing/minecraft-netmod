@@ -72,66 +72,67 @@ public class mod_NetMod
 			EntityDragon.class,
 			EntityWither.class			
 		};
-	public static String[] itemNames = new String[] {
-			"Chicken",
-			"Sheep",
-			"Pig",
-			"Cow",
-			"Bat",
-			"Mushroom Cow",
-			"Ocelot",
-			"Squid",
-			"Villager",
-			"Wolf",
-			"Blaze",
-			"Cave Spider",
-			"Creeper",
-			"Enderman",
-			"Ghast",
-			"Giant",
-			"Iron Golem",
-			"Magma Cube",
-			"Zombie Pigman",
-			"Silverfish",
-			"Skeleton",
-			"Slime",
-			"Snowman",
-			"Spider",
-			"Witch",
-			"Zombie",
-			"Ender Dragon",
-			"Wither"
+	public static String[][] itemNames = new String[][] {
+			{"Chicken", "Chicken"},
+			{"Sheep", "Sheep"},
+			{"Pig", "Pig"},
+			{"Cow", "Cow"},
+			{"Bat", "Bat"},
+			{"Mushroom Cow", "MushroomCow"},
+			{"Ocelot", "Ozelot"},
+			{"Squid", "Squid"},
+			{"Villager", "Villager"},
+			{"Wolf", "Wolf"},
+			{"Blaze", "Blaze"},
+			{"Cave Spider", "CaveSpider"},
+			{"Creeper", "Creeper"},
+			{"Enderman", "Enderman"},
+			{"Ghast", "Ghast"},
+			{"Giant", "Giant"},
+			{"Iron Golem", "VillagerGolem"},
+			{"Magma Cube", "LavaSlime"},
+			{"Zombie Pigman", "PigZombie"},
+			{"Silverfish", "Silverfish"},
+			{"Skeleton", "Skeleton"},
+			{"Slime", "Slime"},
+			{"Snowman", "SnowMan"},
+			{"Spider", "Spider"},
+			{"Witch", "Witch"},
+			{"Zombie", "Zombie"},
+			{"Ender Dragon", "Pig"}, // Ender Dragon does not work well with Spawn Blocks
+			{"Wither", "Pig"} // Wither does not work well with Spawn Blocks
 		};
-	public static String[] mobNames = new String[] {
-			"Chicken",
-			"Sheep",
-			"Pig",
-			"Cow",
-			"Bat",
-			"MushroomCow",
-			"Ozelot",
-			"Squid",
-			"Villager",
-			"Wolf",
-			"Blaze",
-			"CaveSpider",
-			"Creeper",
-			"Enderman",
-			"Ghast",
-			"Giant",
-			"VillagerGolem",
-			"LavaSlime",
-			"PigZombie",
-			"Silverfish",
-			"Skeleton",
-			"Slime",
-			"SnowMan",
-			"Spider",
-			"Witch",
-			"Zombie",
-			"Pig", // Ender Dragon does not work well with Spawn Blocks
-			"Pig" // Wither does not work well with Spawn Blocks
-		};
+	public static float[][] itemProbs = new float[][] {
+		// {Capture Prob, Break Prob}
+		{0.8f, 0.05f}, // Chicken
+		{0.7f, 0.05f}, // Sheep
+		{0.6f, 0.05f}, // Pig
+		{0.7f, 0.05f}, // Cow
+		{0.3f, 0.1f}, // Bat
+		{0.2f, 0.1f}, // Mushroom Cow
+		{0.1f, 0.4f}, // Ocelot
+		{0.25f, 0.05f}, // Squid
+		{0.2f, 0.25f}, // Villager
+		{0.2f, 0.4f}, // Wolf
+		{0.05f, 1.0f}, // Blaze
+		{0.2f, 0.2f}, // Cave Spider
+		{0.2f, 0.1f}, // Creeper
+		{0.02f, 0.3f}, // Enderman
+		{0.1f, 0.3f}, // Ghast
+		{0.2f, 0.4f}, // Giant
+		{0.3f, 0.6f}, // Golem
+		{0.2f, 1.0f}, // Magma Cube
+		{0.1f, 0.5f}, // Zombie Pigman
+		{0.05f, 0.0f}, // Silverfish
+		{0.2f, 0.4f}, // Skeleton
+		{0.3f, 0.0f}, // Slime
+		{0.4f, 0.1f}, // Snowman
+		{0.2f, 0.2f}, // Spider
+		{0.2f, 0.25f}, // Witch
+		{0.3f, 0.1f}, // Zombie
+		{0.01f, 0.2f}, // Ender Dragon
+		{0.02f, 0.2f} // Wither
+	};
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
