@@ -23,6 +23,8 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 
 @Mod(modid = "NetMod", name = "Net Mod", version = "1.0.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
@@ -154,6 +156,36 @@ public class mod_NetMod
         RenderingRegistry.registerEntityRenderingHandler(EntityItemNet.class, new RenderNet(0));
         BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNet, new BehaviorNetDispense(ModLoader.getMinecraftServerInstance()));
         BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNetFull, new BehaviorNetFullDispense(ModLoader.getMinecraftServerInstance()));
+
+        // Nets in all places
+        ItemStack net = new ItemStack(itemNet, 1, 0);
+        WeightedRandomChestContent tmp = new WeightedRandomChestContent(net, 1, 16, 1);
+        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR  ).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_CHEST).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.STRONGHOLD_CORRIDOR ).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.STRONGHOLD_LIBRARY  ).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.STRONGHOLD_CROSSING ).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.VILLAGE_BLACKSMITH ).addItem(tmp);
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER ).addItem(tmp);
+        // Golems in Villages
+        net = new ItemStack(itemNetFull, 1, 16);
+        tmp = new WeightedRandomChestContent(net, 1, 1, 1);
+        ChestGenHooks.getInfo(ChestGenHooks.VILLAGE_BLACKSMITH ).addItem(tmp);
+        // Skeletons, Zombies and Creepers in Jungle dispensers
+        net = new ItemStack(itemNetFull, 1, 12);
+        tmp = new WeightedRandomChestContent(net, 1, 5, 7);
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER ).addItem(tmp);
+        net = new ItemStack(itemNetFull, 1, 20);
+        tmp = new WeightedRandomChestContent(net, 1, 5, 7);
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER ).addItem(tmp);
+        net = new ItemStack(itemNetFull, 1, 25);
+        tmp = new WeightedRandomChestContent(net, 1, 5, 7);
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER ).addItem(tmp);
+        // Villager in Mineshaft
+        net = new ItemStack(itemNetFull, 1, 8);
+        tmp = new WeightedRandomChestContent(net, 1, 1, 1);
+        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR ).addItem(tmp);
     }
 
     @PostInit
