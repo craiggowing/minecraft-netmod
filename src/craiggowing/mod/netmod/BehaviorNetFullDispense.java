@@ -57,6 +57,10 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
         {
             spawnEntity.readEntityFromNBT(par2ItemStack.getTagCompound());
         }
+        else
+        {
+            spawnEntity.initCreature();
+        }
         par1IBlockSource.getWorld().spawnEntityInWorld(spawnEntity);
         par2ItemStack.splitStack(1);
         return par2ItemStack;

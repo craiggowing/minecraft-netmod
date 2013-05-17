@@ -170,6 +170,10 @@ public class ItemNetFull extends ItemNet
         {
             spawnEntity.readEntityFromNBT(par1ItemStack.getTagCompound());
         }
+        else
+        {
+            spawnEntity.initCreature();
+        }
     }
 
     @SideOnly(Side.CLIENT)
