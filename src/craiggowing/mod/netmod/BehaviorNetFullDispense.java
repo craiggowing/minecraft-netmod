@@ -1,18 +1,15 @@
 package craiggowing.mod.netmod;
 
-import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.entity.EntityLiving;
 
 public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
 {
-    /** Reference to the MinecraftServer object. */
     final MinecraftServer mcServer;
 
     public BehaviorNetFullDispense(MinecraftServer par1)
@@ -20,9 +17,6 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
         this.mcServer = par1;
     }
 
-    /**
-     * Dispense the specified stack, play the dispense sound and spawn particles.
-     */
     public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
     {
         EnumFacing var3 = EnumFacing.getFront(par1IBlockSource.func_82620_h());
@@ -34,36 +28,36 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
         float yaw = 0.0f;
         if (var3.getFrontOffsetX() > 0)
         {
-        	yaw = 270.0f;
+            yaw = 270.0f;
         }
         else if (var3.getFrontOffsetX() < 0)
         {
-        	yaw = 90.0f;
+            yaw = 90.0f;
         }
         else if (var3.getFrontOffsetZ() > 0)
         {
-        	yaw = 0.0f;
+            yaw = 0.0f;
         }
         else
         {
-        	yaw = 180.0f;
+            yaw = 180.0f;
         }
-    	spawnEntity.rotationYaw = yaw;
-    	spawnEntity.setPositionAndRotation(var4, var6, var8, yaw, 0.0f);
-    	spawnEntity.posX -= (double)(MathHelper.cos(yaw / 180.0F * (float)Math.PI) * 0.16F);
-    	spawnEntity.posY -= 0.10000000149011612D;
-    	spawnEntity.posZ -= (double)(MathHelper.sin(yaw / 180.0F * (float)Math.PI) * 0.16F);
-    	spawnEntity.setPosition(spawnEntity.posX, spawnEntity.posY, spawnEntity.posZ);
-    	spawnEntity.yOffset = 0.0F;
+        spawnEntity.rotationYaw = yaw;
+        spawnEntity.setPositionAndRotation(var4, var6, var8, yaw, 0.0f);
+        spawnEntity.posX -= (double)(MathHelper.cos(yaw / 180.0F * (float)Math.PI) * 0.16F);
+        spawnEntity.posY -= 0.10000000149011612D;
+        spawnEntity.posZ -= (double)(MathHelper.sin(yaw / 180.0F * (float)Math.PI) * 0.16F);
+        spawnEntity.setPosition(spawnEntity.posX, spawnEntity.posY, spawnEntity.posZ);
+        spawnEntity.yOffset = 0.0F;
         float var10 = 0.4F;
         spawnEntity.motionX = (double)(-MathHelper.sin(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(0.0f / 180.0F * (float)Math.PI) * var10) * 2.0;
         spawnEntity.motionZ = (double)(MathHelper.cos(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(0.0f / 180.0F * (float)Math.PI) * var10) * 2.0;
         spawnEntity.motionY = (double)(-MathHelper.sin((0.0f) / 180.0F * (float)Math.PI) * var10) * 2.0;
         if (par2ItemStack.getTagCompound() != null)
         {
-        	spawnEntity.readEntityFromNBT(par2ItemStack.getTagCompound());
+            spawnEntity.readEntityFromNBT(par2ItemStack.getTagCompound());
         }
-    	par1IBlockSource.getWorld().spawnEntityInWorld(spawnEntity);
+        par1IBlockSource.getWorld().spawnEntityInWorld(spawnEntity);
         par2ItemStack.splitStack(1);
         return par2ItemStack;
     }

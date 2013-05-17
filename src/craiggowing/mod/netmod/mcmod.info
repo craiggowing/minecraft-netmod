@@ -1,20 +1,16 @@
 [
-{
-  "modid": "NetMod",
-  "name": "Net Mod",
-  "description": "Adds net objects which allows capturing of animals and mobs, crafting of spawners, and placing slowing net blocks.",
-  "version": "1.0.0",
-  "url": "https://github.com/craiggowing/minecraft-netmod.git",
-  "updateUrl": "",
-  "authorList": [
-    "Craig Gowing"
-  ],
-  "credits": "Craig Gowing, 2013",
-  "logoFile": "",
-  "screenshots": [
-  ],
-  "parent":"",
-  "dependencies": [
-  ]
-}
+    {
+        "modid": "NetMod",
+        "name": "Net Mod",
+        "description": "Adds net objects which allows capturing of animals and mobs, crafting of spawners, and placing slowing net blocks.",
+        "version": "1.0.0",
+        "url": "https://github.com/craiggowing/minecraft-netmod.git",
+        "updateUrl": "",
+        "authorList": ["Craig Gowing"],
+        "credits": "Craig Gowing, 2013",
+        "logoFile": "",
+        "screenshots": [],
+        "parent":"",
+        "dependencies": []
+    }
 ]
