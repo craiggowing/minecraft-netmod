@@ -1,6 +1,5 @@
 package craiggowing.mod.netmod;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -142,7 +141,9 @@ public class mod_NetMod
     @Init
     public void init(FMLInitializationEvent event)
     {
-        blockNet = (new BlockNet(1000, 1)).setLightOpacity(1).setHardness(4.0F).setBlockName("blocknet");
+        proxy.load();
+
+        blockNet = (new BlockNet(2801, 1)).setLightOpacity(1).setHardness(4.0F).setBlockName("blocknet");
         itemNet = new ItemNet(4001).setItemName("itemnet");
         itemNetFull = new ItemNetFull(4002).setItemName("itemnetfull");
         ModLoader.registerBlock(blockNet);
@@ -153,7 +154,6 @@ public class mod_NetMod
         ModLoader.addShapelessRecipe(new ItemStack(this.blockNet, 1), new Object[] {this.itemNet});
         ModLoader.addShapelessRecipe(new ItemStack(this.itemNet, 1), new Object[] {this.blockNet});
         EntityRegistry.registerModEntity(EntityItemNet.class, "Net", 1, instance, 64, 10, true);
-        RenderingRegistry.registerEntityRenderingHandler(EntityItemNet.class, new RenderNet(0));
         BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNet, new BehaviorNetDispense(ModLoader.getMinecraftServerInstance()));
         BlockDispenser.dispenseBehaviorRegistry.putObject(this.itemNetFull, new BehaviorNetFullDispense(ModLoader.getMinecraftServerInstance()));
 
