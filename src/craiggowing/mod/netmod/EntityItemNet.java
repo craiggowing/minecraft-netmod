@@ -8,6 +8,7 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -41,6 +42,7 @@ public class EntityItemNet extends EntityThrowable
         {
             if (par1MovingObjectPosition.entityHit != null)
             {
+                par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
                 for (int x = 0; x < mod_NetMod.mobTotal; ++x)
                 {
                     if (par1MovingObjectPosition.entityHit.getClass() == mod_NetMod.itemClasses[x])

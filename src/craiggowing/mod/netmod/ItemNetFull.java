@@ -133,6 +133,10 @@ public class ItemNetFull extends ItemNet
                 }
             }
         }
+        else
+        {
+            par3List.add("Random");
+        }
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -171,13 +175,13 @@ public class ItemNetFull extends ItemNet
                     {
                         par3EntityPlayer.dropItem(mod_NetMod.itemNet.itemID, 1);
                     }
+                    par2World.playSoundAtEntity(par3EntityPlayer, "mob.endermen.stare", 3.0F, 1.0F);
                     return par1ItemStack;
                 }
             }
         }
 
         /* Throw creature if not */
-        par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
         if (!par2World.isRemote)
         {
@@ -188,6 +192,7 @@ public class ItemNetFull extends ItemNet
             {
                 par3EntityPlayer.dropItem(mod_NetMod.itemNet.itemID, 1);
             }
+            spawnEntity.playLivingSound();
         }
 
         return par1ItemStack;
