@@ -47,8 +47,15 @@ public class EntityItemNet extends EntityThrowable
                 {
                     if (par1MovingObjectPosition.entityHit.getClass() == mod_NetMod.itemClasses[x])
                     {
-                        capturedAnimal = x;
-                        break;
+                        if (par1MovingObjectPosition.entityHit instanceof EntityLiving && ((EntityLiving)par1MovingObjectPosition.entityHit).getHealth() <= 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            capturedAnimal = x;
+                            break;
+                        }
                     }
                 }
                 if (capturedAnimal > -1)
@@ -78,7 +85,7 @@ public class EntityItemNet extends EntityThrowable
                     dropped.getEntityItem().setTagCompound(nbt_is);
                     par1MovingObjectPosition.entityHit.setDead();
                 }
-                else if (capturedAnimal == -1 && par1MovingObjectPosition.entityHit instanceof EntityLiving)
+                else if (capturedAnimal == -1 && par1MovingObjectPosition.entityHit instanceof EntityLiving  && ((EntityLiving)par1MovingObjectPosition.entityHit).getHealth() > 0)
                 {
                     EntityLiving eh = (EntityLiving)par1MovingObjectPosition.entityHit;
 
