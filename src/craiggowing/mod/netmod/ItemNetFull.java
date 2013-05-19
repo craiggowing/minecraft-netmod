@@ -175,10 +175,10 @@ public class ItemNetFull extends ItemNet
                             TileEntityMobSpawner tems = (TileEntityMobSpawner)te;
                             tems.setMobID(this.getMobName(par1ItemStack));
                         }
-                    }
-                    if (random.nextFloat() >= mod_NetMod.itemProbs[var2][1])
-                    {
-                        par3EntityPlayer.dropItem(mod_NetMod.itemNet.itemID, 1);
+                        if (random.nextFloat() >= mod_NetMod.itemProbs[var2][1])
+                        {
+                            par3EntityPlayer.dropItem(mod_NetMod.itemNet.itemID, 1);
+                        }
                     }
                     par2World.playSoundAtEntity(par3EntityPlayer, "mob.endermen.stare", 3.0F, 1.0F);
                     return par1ItemStack;
