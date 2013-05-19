@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemNetFull extends ItemNet
@@ -43,7 +44,7 @@ public class ItemNetFull extends ItemNet
     public String getItemNetName(ItemStack par1ItemStack)
     {
         int var2 = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, mod_NetMod.mobTotal-1);
-        return mod_NetMod.itemNames[var2][0];
+        return StatCollector.translateToLocal(mod_NetMod.itemNames[var2][0]);
     }
 
     public String getMobName(ItemStack par1ItemStack)
@@ -79,31 +80,31 @@ public class ItemNetFull extends ItemNet
         {
             if (tag.hasKey("Health"))
             {
-                par3List.add("Health: " + tag.getShort("Health"));
+                par3List.add(StatCollector.translateToLocal("netmod.health") + ": " + tag.getShort("Health"));
             }
             if (tag.hasKey("Age"))
             {
-                par3List.add("Age: " + tag.getInteger("Age"));
+                par3List.add(StatCollector.translateToLocal("netmod.age") + ": " + tag.getInteger("Age"));
             }
             if (tag.hasKey("InLove"))
             {
-                par3List.add("Love Meter: " + tag.getInteger("InLove"));
+                par3List.add(StatCollector.translateToLocal("netmod.inlove") + ": " + tag.getInteger("InLove"));
             }
             if (tag.hasKey("Saddle"))
             {
-                par3List.add("Has Saddle: " + (tag.getBoolean("Saddle") ? "Yes" : "No"));
+                par3List.add(StatCollector.translateToLocal("netmod.hassaddle") + ": " + (tag.getBoolean("Saddle") ? "Yes" : "No"));
             }
             if (tag.hasKey("Sheared"))
             {
-                par3List.add("Sheared: " + (tag.getBoolean("Sheared") ? "Yes" : "No"));
+                par3List.add(StatCollector.translateToLocal("netmod.sheared") + ": " + (tag.getBoolean("Sheared") ? "Yes" : "No"));
             }
             if (tag.hasKey("Color"))
             {
-                par3List.add("Fleece: " + ItemDye.dyeColorNames[tag.getByte("Color")]); // Avoiding the argument of Colour vs Color... Colour is correct :P
+                par3List.add(StatCollector.translateToLocal("netmod.fleece") + ": " + StatCollector.translateToLocal("item.fireworksCharge." + ItemDye.dyeColorNames[15 - (tag.getByte("Color") & 15)]));
             }
             if (tag.hasKey("Size"))
             {
-                par3List.add("Size: " + tag.getInteger("Size") + 1);
+                par3List.add(StatCollector.translateToLocal("netmod.size") + ": " + tag.getInteger("Size") + 1);
             }
             if (tag.hasKey("Equipment"))
             {
@@ -123,12 +124,12 @@ public class ItemNetFull extends ItemNet
                         {
                             stackSize = itemNBT.getByte("Count");
                             itemDamage = itemNBT.getShort("Damage");
-                            Entries.add("* " + item.getItemName() + " (" + stackSize + "," + itemDamage + ")");
+                            Entries.add("* " + StatCollector.translateToLocal(item.getItemName()) + " (#" + stackSize + ", " + itemDamage + ")");
                         }
                     }
                     if (!Entries.isEmpty())
                     {
-                        par3List.add("Equipment: " + Entries.size());
+                        par3List.add(StatCollector.translateToLocal("netmod.equipment") + ": " + Entries.size());
                         for (int var3 = 0; var3 < Entries.size(); ++var3)
                         {
                             par3List.add(Entries.get(var3));

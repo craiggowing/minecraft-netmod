@@ -1,5 +1,7 @@
 package craiggowing.mod.netmod;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -22,6 +24,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
+import net.minecraft.util.StringTranslate;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 
@@ -72,34 +75,34 @@ public class mod_NetMod
             EntityWither.class
         };
     public static String[][] itemNames = new String[][] {
-            {"Chicken", "Chicken"},
-            {"Sheep", "Sheep"},
-            {"Pig", "Pig"},
-            {"Cow", "Cow"},
-            {"Bat", "Bat"},
-            {"Mushroom Cow", "MushroomCow"},
-            {"Ocelot", "Ozelot"},
-            {"Squid", "Squid"},
-            {"Villager", "Villager"},
-            {"Wolf", "Wolf"},
-            {"Blaze", "Blaze"},
-            {"Cave Spider", "CaveSpider"},
-            {"Creeper", "Creeper"},
-            {"Enderman", "Enderman"},
-            {"Ghast", "Ghast"},
-            {"Giant", "Giant"},
-            {"Iron Golem", "VillagerGolem"},
-            {"Magma Cube", "LavaSlime"},
-            {"Zombie Pigman", "PigZombie"},
-            {"Silverfish", "Silverfish"},
-            {"Skeleton", "Skeleton"},
-            {"Slime", "Slime"},
-            {"Snowman", "SnowMan"},
-            {"Spider", "Spider"},
-            {"Witch", "Witch"},
-            {"Zombie", "Zombie"},
-            {"Ender Dragon", "Pig"}, // Ender Dragon does not work well with Spawn Blocks
-            {"Wither", "Pig"} // Wither does not work well with Spawn Blocks
+            {"entity.Chicken.name", "Chicken"},
+            {"entity.Sheep.name", "Sheep"},
+            {"entity.Pig.name", "Pig"},
+            {"entity.Cow.name", "Cow"},
+            {"entity.Bat.name", "Bat"},
+            {"entity.MushroomCow.name", "MushroomCow"},
+            {"entity.Ozelot.name", "Ozelot"},
+            {"entity.Squid.name", "Squid"},
+            {"entity.Villager.name", "Villager"},
+            {"entity.Wolf.name", "Wolf"},
+            {"entity.Blaze.name", "Blaze"},
+            {"entity.CaveSpider.name", "CaveSpider"},
+            {"entity.Creeper.name", "Creeper"},
+            {"entity.Enderman.name", "Enderman"},
+            {"entity.Ghast.name", "Ghast"},
+            {"entity.Giant.name", "Giant"},
+            {"entity.VillagerGolem.name", "VillagerGolem"},
+            {"entity.LavaSlime.name", "LavaSlime"},
+            {"entity.PigZombie.name", "PigZombie"},
+            {"entity.Silverfish.name", "Silverfish"},
+            {"entity.Skeleton.name", "Skeleton"},
+            {"entity.Slime.name", "Slime"},
+            {"entity.SnowMan.name", "SnowMan"},
+            {"entity.Spider.name", "Spider"},
+            {"entity.Witch.name", "Witch"},
+            {"entity.Zombie.name", "Zombie"},
+            {"entity.EnderDragon.name", "Pig"}, // Ender Dragon does not work well with Spawn Blocks
+            {"entity.WitherBoss.name", "Pig"} // Wither does not work well with Spawn Blocks
         };
     public static float[][] itemProbs = new float[][] {
         // {Capture Prob, Break Prob}
@@ -147,9 +150,6 @@ public class mod_NetMod
         itemNet = new ItemNet(4001).setItemName("itemnet");
         itemNetFull = new ItemNetFull(4002).setItemName("itemnetfull");
         ModLoader.registerBlock(blockNet);
-        ModLoader.addName(blockNet, "Net Block");
-        ModLoader.addName(itemNet, "Net");
-        ModLoader.addName(itemNetFull, "Net");
         ModLoader.addRecipe(new ItemStack(this.itemNet, 4), new Object[] { "DdD", "ddd", "DdD", 'D', Block.cobblestone, 'd', Block.fenceIron});
         ModLoader.addShapelessRecipe(new ItemStack(this.blockNet, 1), new Object[] {this.itemNet});
         ModLoader.addShapelessRecipe(new ItemStack(this.itemNet, 1), new Object[] {this.blockNet});
@@ -186,6 +186,26 @@ public class mod_NetMod
         net = new ItemStack(itemNetFull, 1, 8);
         tmp = new WeightedRandomChestContent(net, 1, 1, 1);
         ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR ).addItem(tmp);
+
+        // Translations
+        try
+        {
+            LanguageRegistry.instance().loadLocalization("/craiggowing/mod/netmod/lang/en_US.lang", "en_US", false);
+        }
+        catch(Exception e) {}
+        try
+        {
+            BufferedReader var2 = new BufferedReader(new InputStreamReader(StringTranslate.class.getResourceAsStream("/craiggowing/mod/netmod/lang/languages.txt"), "UTF-8"));
+            for (String var3 = var2.readLine(); var3 != null; var3 = var2.readLine())
+            {
+                String[] var4 = var3.split("=");
+                if (var4 != null && var4.length == 2)
+                {
+                    LanguageRegistry.instance().loadLocalization("/craiggowing/mod/netmod/lang/"+var4[0]+".lang", var4[0], false);
+                }
+            }
+        }
+        catch(Exception e) {}
     }
 
     @PostInit
