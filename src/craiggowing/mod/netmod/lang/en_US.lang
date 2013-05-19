@@ -1,0 +1,12 @@
+tile.blocknet.name=Net Block
+tile.blockcattlegrid.name=Cattle Grid
+item.itemnet.name=Net
+item.itemnetfull.name=Net
+netmod.health=Health
+netmod.age=Age
+netmod.inlove=In Love
+netmod.hassaddle=Has Saddle
+netmod.sheared=Sheared
+netmod.fleece=Fleece
+netmod.size=Size
+netmod.equipment=Equipment
