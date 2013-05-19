@@ -23,7 +23,7 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
     {
         EnumFacing var3 = EnumFacing.getFront(par1IBlockSource.func_82620_h());
         double var4 = par1IBlockSource.getX() + (double)var3.getFrontOffsetX();
-        double var6 = (double)((float)par1IBlockSource.getYInt() + 0.2F);
+        double var6 = (double)((float)par1IBlockSource.getYInt());
         double var8 = par1IBlockSource.getZ() + (double)var3.getFrontOffsetZ();
         ItemNetFull inf = (ItemNetFull)par2ItemStack.getItem();
         EntityLiving spawnEntity = inf.getEntityToSpawn(par2ItemStack, par1IBlockSource.getWorld());
@@ -54,7 +54,7 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
         float var10 = 0.4F;
         spawnEntity.motionX = (double)(-MathHelper.sin(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(0.0f / 180.0F * (float)Math.PI) * var10) * 2.0;
         spawnEntity.motionZ = (double)(MathHelper.cos(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(0.0f / 180.0F * (float)Math.PI) * var10) * 2.0;
-        spawnEntity.motionY = (double)(-MathHelper.sin((0.0f) / 180.0F * (float)Math.PI) * var10) * 2.0;
+        spawnEntity.motionY = (double)(-MathHelper.sin((0.0f) / 180.0F * (float)Math.PI) * var10) * 1.3;
         if (par2ItemStack.getTagCompound() != null)
         {
             NBTTagList tl = par2ItemStack.getTagCompound().getTagList("Creature");

@@ -88,14 +88,10 @@ public class EntityItemNet extends EntityThrowable
 
                     if (this.worldObj.getBlockId(var13, var14, var15) == 0) // air
                     {
-                        if (!this.worldObj.isRemote && this.getThrower() instanceof EntityPlayer)
+                        if (!this.worldObj.isRemote)
                         {
-                            EntityPlayer ep = (EntityPlayer)this.getThrower();
-                            if (ep.canPlayerEdit(var13, var14, var15, 0, null))
-                            {
-                                this.worldObj.setBlockAndMetadataWithNotify(var13, var14, var15, mod_NetMod.blockNet.blockID, 1);
-                                capturedAnimal = 0;
-                            }
+                            this.worldObj.setBlockAndMetadataWithNotify(var13, var14, var15, mod_NetMod.blockNet.blockID, 1);
+                            capturedAnimal = 0;
                         }
                     }
                 }
@@ -110,10 +106,6 @@ public class EntityItemNet extends EntityThrowable
                 if (random.nextFloat() >= mod_NetMod.itemProbs[capturedAnimal][1])
                 {
                     this.dropItem(mod_NetMod.itemNet.itemID, 1);
-                }
-                else
-                {
-                    // Break noise, broken item?
                 }
             }
         }

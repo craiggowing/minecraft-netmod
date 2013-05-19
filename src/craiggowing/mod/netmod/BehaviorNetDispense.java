@@ -21,5 +21,15 @@ public class BehaviorNetDispense extends BehaviorProjectileDispense
         EntityItemNet var3 = new EntityItemNet(par1World, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ());
         return var3;
     }
+
+    protected float func_82498_a()
+    {
+        return 4.0F;
+    }
+
+    protected float func_82500_b()
+    {
+        return 1.0F;
+    }
 }
 
