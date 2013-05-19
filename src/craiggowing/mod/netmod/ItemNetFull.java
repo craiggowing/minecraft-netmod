@@ -101,6 +101,10 @@ public class ItemNetFull extends ItemNet
             {
                 par3List.add("Fleece: " + ItemDye.dyeColorNames[tag.getByte("Color")]); // Avoiding the argument of Colour vs Color... Colour is correct :P
             }
+            if (tag.hasKey("Size"))
+            {
+                par3List.add("Size: " + tag.getInteger("Size") + 1);
+            }
             if (tag.hasKey("Equipment"))
             {
                 NBTTagList eqtl = tag.getTagList("Equipment");
