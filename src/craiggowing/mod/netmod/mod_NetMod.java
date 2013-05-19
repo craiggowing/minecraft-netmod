@@ -42,6 +42,7 @@ public class mod_NetMod
     public static Item itemNet;
     public static Item itemNetFull;
     public static Block blockNet;
+    public static Block blockCattleGrid;
 
     public static int mobTotal = 28;
     public static Class[] itemClasses = new Class[] {
@@ -147,10 +148,14 @@ public class mod_NetMod
         proxy.load();
 
         blockNet = (new BlockNet(2801, 1)).setLightOpacity(1).setHardness(4.0F).setBlockName("blocknet");
+        blockCattleGrid = (new BlockCattleGrid(2802, 2)).setLightOpacity(1).setHardness(1.0F).setBlockName("blockcattlegrid");
         itemNet = new ItemNet(4001).setItemName("itemnet");
         itemNetFull = new ItemNetFull(4002).setItemName("itemnetfull");
         ModLoader.registerBlock(blockNet);
+        ModLoader.registerBlock(blockCattleGrid);
         ModLoader.addRecipe(new ItemStack(this.itemNet, 4), new Object[] { "DdD", "ddd", "DdD", 'D', Block.cobblestone, 'd', Block.fenceIron});
+        ModLoader.addRecipe(new ItemStack(this.blockCattleGrid, 3), new Object[] { "DdD", "DdD", "DdD", 'D', Block.cobblestone, 'd', Block.fenceIron});
+        ModLoader.addRecipe(new ItemStack(this.blockCattleGrid, 3), new Object[] { "DDD", "ddd", "DDD", 'D', Block.cobblestone, 'd', Block.fenceIron});
         ModLoader.addShapelessRecipe(new ItemStack(this.blockNet, 1), new Object[] {this.itemNet});
         ModLoader.addShapelessRecipe(new ItemStack(this.itemNet, 1), new Object[] {this.blockNet});
         EntityRegistry.registerModEntity(EntityItemNet.class, "Net", 1, instance, 64, 10, true);
