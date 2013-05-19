@@ -163,7 +163,7 @@ public class ItemNetFull extends ItemNet
 
             if (par2World.canMineBlock(par3EntityPlayer, var13, var14, var15) && par3EntityPlayer.canPlayerEdit(var13, var14, var15, var12.sideHit, par1ItemStack))
             {
-                if (par2World.getBlockId(var13, var14, var15) == Block.blockDiamond.blockID)
+                if (par2World.getBlockId(var13, var14, var15) == Block.blockDiamond.blockID || par2World.getBlockId(var13, var14, var15) == Block.blockEmerald.blockID)
                 {
                     if (!par2World.isRemote)
                     {
