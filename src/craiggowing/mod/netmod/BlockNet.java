@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -87,5 +88,17 @@ public class BlockNet extends Block
     public String getTextureFile()
     {
         return CommonProxy.ITEMS_PNG;
+    }
+
+    public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World, int par3, int par4, int par5)
+    {
+        if (par1EntityPlayer.canHarvestBlock(Block.web))
+        {
+            return 0.04f; // This appears to be inverse... 1.0f == not hard, 0.001f == very hard
+        }
+        else
+        {
+            return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4, par5);
+        }
     }
 }
