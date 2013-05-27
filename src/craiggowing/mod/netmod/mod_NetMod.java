@@ -75,34 +75,34 @@ public class mod_NetMod
             EntityWither.class
         };
     public static String[][] itemNames = new String[][] {
-            {"entity.Chicken.name", "Chicken"},
-            {"entity.Sheep.name", "Sheep"},
-            {"entity.Pig.name", "Pig"},
-            {"entity.Cow.name", "Cow"},
-            {"entity.Bat.name", "Bat"},
-            {"entity.MushroomCow.name", "MushroomCow"},
-            {"entity.Ozelot.name", "Ozelot"},
-            {"entity.Squid.name", "Squid"},
-            {"entity.Villager.name", "Villager"},
-            {"entity.Wolf.name", "Wolf"},
-            {"entity.Blaze.name", "Blaze"},
-            {"entity.CaveSpider.name", "CaveSpider"},
-            {"entity.Creeper.name", "Creeper"},
-            {"entity.Enderman.name", "Enderman"},
-            {"entity.Ghast.name", "Ghast"},
-            {"entity.Giant.name", "Giant"},
-            {"entity.VillagerGolem.name", "VillagerGolem"},
-            {"entity.LavaSlime.name", "LavaSlime"},
-            {"entity.PigZombie.name", "PigZombie"},
-            {"entity.Silverfish.name", "Silverfish"},
-            {"entity.Skeleton.name", "Skeleton"},
-            {"entity.Slime.name", "Slime"},
-            {"entity.SnowMan.name", "SnowMan"},
-            {"entity.Spider.name", "Spider"},
-            {"entity.Witch.name", "Witch"},
-            {"entity.Zombie.name", "Zombie"},
-            {"entity.EnderDragon.name", "Pig"}, // Ender Dragon does not work well with Spawn Blocks
-            {"entity.WitherBoss.name", "Pig"} // Wither does not work well with Spawn Blocks
+            {"entity.Chicken.name", "Chicken", "craiggowing/mod/netmod:net_chicken"},
+            {"entity.Sheep.name", "Sheep", "craiggowing/mod/netmod:net_sheep"},
+            {"entity.Pig.name", "Pig", "craiggowing/mod/netmod:net_pig"},
+            {"entity.Cow.name", "Cow", "craiggowing/mod/netmod:net_cow"},
+            {"entity.Bat.name", "Bat", "craiggowing/mod/netmod:net"},
+            {"entity.MushroomCow.name", "MushroomCow", "craiggowing/mod/netmod:net"},
+            {"entity.Ozelot.name", "Ozelot", "craiggowing/mod/netmod:net"},
+            {"entity.Squid.name", "Squid", "craiggowing/mod/netmod:net"},
+            {"entity.Villager.name", "Villager", "craiggowing/mod/netmod:net"},
+            {"entity.Wolf.name", "Wolf", "craiggowing/mod/netmod:net"},
+            {"entity.Blaze.name", "Blaze", "craiggowing/mod/netmod:net"},
+            {"entity.CaveSpider.name", "CaveSpider", "craiggowing/mod/netmod:net"},
+            {"entity.Creeper.name", "Creeper", "craiggowing/mod/netmod:net"},
+            {"entity.Enderman.name", "Enderman", "craiggowing/mod/netmod:net"},
+            {"entity.Ghast.name", "Ghast", "craiggowing/mod/netmod:net"},
+            {"entity.Giant.name", "Giant", "craiggowing/mod/netmod:net"},
+            {"entity.VillagerGolem.name", "VillagerGolem", "craiggowing/mod/netmod:net"},
+            {"entity.LavaSlime.name", "LavaSlime", "craiggowing/mod/netmod:net"},
+            {"entity.PigZombie.name", "PigZombie", "craiggowing/mod/netmod:net"},
+            {"entity.Silverfish.name", "Silverfish", "craiggowing/mod/netmod:net"},
+            {"entity.Skeleton.name", "Skeleton", "craiggowing/mod/netmod:net"},
+            {"entity.Slime.name", "Slime", "craiggowing/mod/netmod:net"},
+            {"entity.SnowMan.name", "SnowMan", "craiggowing/mod/netmod:net"},
+            {"entity.Spider.name", "Spider", "craiggowing/mod/netmod:net"},
+            {"entity.Witch.name", "Witch", "craiggowing/mod/netmod:net"},
+            {"entity.Zombie.name", "Zombie", "craiggowing/mod/netmod:net"},
+            {"entity.EnderDragon.name", "Pig", "craiggowing/mod/netmod:net"}, // Ender Dragon does not work well with Spawn Blocks
+            {"entity.WitherBoss.name", "Pig", "craiggowing/mod/netmod:net"} // Wither does not work well with Spawn Blocks
         };
     public static float[][] itemProbs = new float[][] {
         // {Capture Prob, Break Prob}
@@ -144,11 +144,9 @@ public class mod_NetMod
     @Init
     public void init(FMLInitializationEvent event)
     {
-        proxy.load();
-
-        blockNet = (new BlockNet(2801, 1)).setLightOpacity(1).setHardness(4.0F).setBlockName("blocknet");
-        itemNet = new ItemNet(4001).setItemName("itemnet");
-        itemNetFull = new ItemNetFull(4002).setItemName("itemnetfull");
+        blockNet = new BlockNet(2801).setLightOpacity(1).setHardness(4.0F).setUnlocalizedName("blocknet");
+        itemNet = new ItemNet(4001).setUnlocalizedName("itemnet");
+        itemNetFull = new ItemNetFull(4002).setUnlocalizedName("itemnetfull");
         ModLoader.registerBlock(blockNet);
         ModLoader.addRecipe(new ItemStack(this.itemNet, 4), new Object[] { "DdD", "ddd", "DdD", 'D', Block.cobblestone, 'd', Block.fenceIron});
         ModLoader.addShapelessRecipe(new ItemStack(this.blockNet, 1), new Object[] {this.itemNet});
@@ -206,6 +204,8 @@ public class mod_NetMod
             }
         }
         catch(Exception e) {}
+
+        proxy.load();
     }
 
     @PostInit

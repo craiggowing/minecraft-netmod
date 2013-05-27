@@ -97,7 +97,7 @@ public class EntityItemNet extends EntityThrowable
                     {
                         if (!this.worldObj.isRemote)
                         {
-                            this.worldObj.setBlockAndMetadataWithNotify(var13, var14, var15, mod_NetMod.blockNet.blockID, 1);
+                            this.worldObj.setBlock(var13, var14, var15, mod_NetMod.blockNet.blockID, 0, 3);
                             capturedAnimal = 0;
                         }
                     }
@@ -126,10 +126,5 @@ public class EntityItemNet extends EntityThrowable
         {
             this.setDead();
         }
-    }
-
-    public String getTexture()
-    {
-        return CommonProxy.ITEMS_PNG;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntityPig;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
@@ -25,20 +27,22 @@ import net.minecraft.world.World;
 
 public class ItemNetFull extends ItemNet
 {
+    @SideOnly(Side.CLIENT)
+    private Icon[] icons;
+
     public ItemNetFull(int par1)
     {
         super(par1);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.maxStackSize = 1;
-        this.setIconIndex(16);
     }
 
     @SideOnly(Side.CLIENT)
-    public int getIconFromDamage(int par1)
+    public Icon getIconFromDamage(int par1)
     {
         int var2 = MathHelper.clamp_int(par1, 0, mod_NetMod.mobTotal-1);
-        return this.iconIndex + var2;
+        return this.icons[var2];
     }
 
     public String getItemNetName(ItemStack par1ItemStack)
@@ -124,7 +128,7 @@ public class ItemNetFull extends ItemNet
                         {
                             stackSize = itemNBT.getByte("Count");
                             itemDamage = itemNBT.getShort("Damage");
-                            Entries.add("* " + StatCollector.translateToLocal(item.getItemName()) + " (#" + stackSize + ", " + itemDamage + ")");
+                            Entries.add("* " + StatCollector.translateToLocal(item.getUnlocalizedName()) + " (#" + stackSize + ", " + itemDamage + ")");
                         }
                     }
                     if (!Entries.isEmpty())
@@ -168,12 +172,12 @@ public class ItemNetFull extends ItemNet
                 {
                     if (!par2World.isRemote)
                     {
-                        par2World.setBlockAndMetadataWithNotify(var13, var14, var15, Block.mobSpawner.blockID, 1);
+                        par2World.setBlock(var13, var14, var15, Block.mobSpawner.blockID, 0, 3);
                         TileEntity te = par2World.getBlockTileEntity(var13, var14, var15);
                         if (te != null && te instanceof TileEntityMobSpawner)
                         {
                             TileEntityMobSpawner tems = (TileEntityMobSpawner)te;
-                            tems.setMobID(this.getMobName(par1ItemStack));
+                            tems.func_98049_a().setMobID(this.getMobName(par1ItemStack));
                         }
                         if (random.nextFloat() >= mod_NetMod.itemProbs[var2][1])
                         {
@@ -233,5 +237,16 @@ public class ItemNetFull extends ItemNet
         {
             par3List.add(new ItemStack(par1, 1, var4));
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        this.icons = new Icon[mod_NetMod.mobTotal];
+        for (int x = 0; x < mod_NetMod.mobTotal; ++x)
+        {
+            this.icons[x] = par1IconRegister.registerIcon(mod_NetMod.itemNames[x][2]);
+        }
+        this.itemIcon = this.icons[0];
     }
 }

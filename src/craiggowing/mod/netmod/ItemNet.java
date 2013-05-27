@@ -1,9 +1,14 @@
 package craiggowing.mod.netmod;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 public class ItemNet extends Item
@@ -13,7 +18,6 @@ public class ItemNet extends Item
         super(par1);
         this.maxStackSize = 64;
         this.setCreativeTab(CreativeTabs.tabCombat);
-        this.setIconIndex(0);
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -33,8 +37,9 @@ public class ItemNet extends Item
         return par1ItemStack;
     }
 
-    public String getTextureFile()
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-        return CommonProxy.ITEMS_PNG;
+        this.itemIcon = par1IconRegister.registerIcon("craiggowing/mod/netmod:net");
     }
 }

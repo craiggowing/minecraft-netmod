@@ -1,8 +1,12 @@
 package craiggowing.mod.netmod;
 
 import java.util.Random;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -15,9 +19,9 @@ public class BlockNet extends Block
 {
     private Random random = new Random();
 
-    public BlockNet(int par1, int par2)
+    public BlockNet(int par1)
     {
-        super(par1, par2, Material.web);
+        super(par1, Material.web);
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
@@ -85,9 +89,10 @@ public class BlockNet extends Block
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 
-    public String getTextureFile()
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-        return CommonProxy.ITEMS_PNG;
+         this.blockIcon = par1IconRegister.registerIcon("craiggowing/mod/netmod:netblock");
     }
 
     public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World, int par3, int par4, int par5)

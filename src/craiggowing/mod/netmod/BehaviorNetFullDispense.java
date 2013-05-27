@@ -1,5 +1,6 @@
 package craiggowing.mod.netmod;
 
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.EntityLiving;
@@ -21,7 +22,7 @@ public class BehaviorNetFullDispense extends BehaviorDefaultDispenseItem
 
     public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
     {
-        EnumFacing var3 = EnumFacing.getFront(par1IBlockSource.func_82620_h());
+        EnumFacing var3 = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
         double var4 = par1IBlockSource.getX() + (double)var3.getFrontOffsetX();
         double var6 = (double)((float)par1IBlockSource.getYInt());
         double var8 = par1IBlockSource.getZ() + (double)var3.getFrontOffsetZ();
